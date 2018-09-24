@@ -39,6 +39,8 @@ _mailinglist
 .pytest_cache/
 docs/_build/
 
+instance/*
+
 # Coverage reports
 htmlcov/
 .coverage
