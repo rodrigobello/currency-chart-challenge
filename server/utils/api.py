@@ -1,4 +1,5 @@
 from werkzeug.security import safe_str_cmp
+from flask import current_app
 import requests
 import json
 
@@ -15,8 +16,9 @@ def request_quotation(currency, date=None):
     :param date: 'YYYY-MM-DD' as String
     :return: quotation as Float
     """
+
     params = {
-        "access_key": "4727a0941e98946607483bb5b86958f5",
+        "access_key": current_app.config.CURRENCY_LAYER_KEY,
         "currencies": f'BRL,{currency}'
     }
 
