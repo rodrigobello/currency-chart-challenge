@@ -22,7 +22,7 @@ test/the-files-to-test.generated.js
 *.iml
 *.swp
 *.swo
-
+.bashrc
 
 .env
 .flaskenv
@@ -30,6 +30,7 @@ test/the-files-to-test.generated.js
 env/
 env*
 dist/
+.eggs
 *.egg
 *.egg-info/
 _mailinglist
