@@ -3,5 +3,5 @@ from api.quotes import quotes
 
 
 class Quotes(Resource):
-    def get(self, currency):
+    def get(self):
         return quotes
