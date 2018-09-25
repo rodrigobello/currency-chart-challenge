@@ -22,8 +22,6 @@ def create_app(config):
 def register_api(app):
     api = Api(app)
 
-    from api.resources.currency import Currency
-    api.add_resource(Currency, '/api/quotes/<string:currency>')
-
-    from api.resources.quotes import Quotes
-    api.add_resource(Quotes, '/api/quotes')
+    from api.resources.currency import Currency, Currencies
+    api.add_resource(Currency, '/api/currencies/<string:currency>')
+    api.add_resource(Currencies, '/api/currencies')
