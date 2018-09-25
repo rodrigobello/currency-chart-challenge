@@ -4,21 +4,21 @@ from utils.currencies import CURRENCIES
 import random
 
 
-class TestQuotations(unittest.TestCase):
+class TestRates(unittest.TestCase):
     def setUp(self):
         self.app = create_app(config="testing")
         self.client = self.app.test_client
 
-    def test_get_quotes(self):
-        """ Test all quotes [GET Request] """
-        response = self.client().get('/api/quotes')
+    def test_get_currencies(self):
+        """ Test all currencies rates [GET Request] """
+        response = self.client().get('/api/currencies')
         assert response.status_code == 200
 
     def test_get_currency(self):
-        """ Test specific currency quotes [GET Request] """
+        """ Test specific currency rates [GET Request] """
         currency = random.choice(CURRENCIES)[0]
 
-        response = self.client().get(f'/api/quotes/{currency}')
+        response = self.client().get(f'/api/currencies/{currency}')
 
         if currency in ['USD', 'EUR', 'ARS']:
             assert response.status_code == 200
