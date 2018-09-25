@@ -3,3 +3,4 @@ Flask-RESTful==0.3.6
 flake8==3.5.0
 pytest==3.8.1
 pytest-cov==2.6.0
+requests==2.19.1
