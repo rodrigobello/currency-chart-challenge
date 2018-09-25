@@ -3,6 +3,8 @@ from flask import current_app
 import requests
 import json
 
+from utils.date import datetime, date_to_str
+
 
 def request_quotation(currency, date=None):
     """
@@ -16,9 +18,8 @@ def request_quotation(currency, date=None):
     :param date: 'YYYY-MM-DD' as String
     :return: quotation as Float
     """
-
     params = {
-        "access_key": current_app.config.CURRENCY_LAYER_KEY,
+        "access_key": current_app.config['CURRENCY_LAYER_KEY'],
         "currencies": f'BRL,{currency}'
     }
 
@@ -44,16 +45,7 @@ def request_quotation(currency, date=None):
     return quotes[f'USD{currency}'] / quotes['USDBRL']
 
 
-def get_dates_quotations(dates, currency):
-    """
-    :param dates: [ String ]
-    :param currency: String
-    :return: quotations as [ { date: String, currency: String, brl: Float } ]
-    """
-    return list(map(lambda x: create_quotation_dictionary(x, currency), dates))
-
-
-def create_quotation_dictionary(date, currency):
+def create_quotation_dictionary(currency, date=None):
     """
     :param quote: Float
     :param date: String
@@ -61,7 +53,25 @@ def create_quotation_dictionary(date, currency):
     :return: quotation as { date: String, currency: String, brl: Float }
     """
     return {
-        'date': date,
-        'quote': request_quotation(currency, date),
+        'date': date if date else date_to_str(datetime.date.today()),
+        'quote': request_quotation(currency, date=date),
         'currency': currency,
     }
+
+
+def get_historical_rates(currency, dates):
+    """
+    :param dates: [ String ]
+    :param currency: String
+    :return: quotations as [{ date: String, currency: String, brl: Float }]
+    """
+    return list(map(lambda x: create_quotation_dictionary(currency, x), dates))
+
+
+def get_live_rate(currency):
+    """
+    :param date: String
+    :param currency: String
+    :return: quotation as { date: String, currency: String, brl: Float }
+    """
+    return create_quotation_dictionary(currency)
