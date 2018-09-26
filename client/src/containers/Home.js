@@ -7,8 +7,7 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedCurrency: '',
-      quotes: [],
+      rates: [],
     };
 
     this.onClick = this.onClick.bind(this);
@@ -19,12 +18,18 @@ class Home extends Component {
   }
 
   render() {
-    const { selectedCurrency, quotes } = this.state;
+    const { selectedCurrency, rates } = this.state;
+    let chart;
+    if (selectedCurrency) {
+      chart = <Chart selectedCurrency={selectedCurrency} rates={rates} />;
+    } else {
+      chart = <p>Select a currency to plot the chart</p>;
+    }
     return (
       <div className="container">
         <h1>BRMED Challenge</h1>
         <Menu selectedCurrency={selectedCurrency} onClick={this.onClick} />
-        <Chart quotations={quotes} />
+        { chart }
       </div>
     );
   }
