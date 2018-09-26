@@ -55,7 +55,6 @@ def create_quotation_dictionary(currency, date=None):
     return {
         'date': date if date else date_to_str(datetime.date.today()),
         'quote': request_quotation(currency, date=date),
-        'currency': currency,
     }
 
 
