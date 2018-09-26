@@ -2,10 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import ReactHighcharts from 'react-highcharts';
-import './CurrencyChart.css';
 
 const chart = ({ selectedCurrency, rates }) => {
   const config = {
+    title: {
+      text: null,
+    },
     yAxis: {
       title: {
         text: null,
@@ -20,7 +22,7 @@ const chart = ({ selectedCurrency, rates }) => {
     }],
   };
 
-  rates.reverse().forEach((rate) => {
+  rates.forEach((rate) => {
     config.xAxis.categories.push(rate.date);
     config.series[0].data.push(rate.quote);
   });
