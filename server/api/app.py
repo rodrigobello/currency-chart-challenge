@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_restful import Api
 
-from instance.config import app_config
+from config import app_config
 
 
 def create_app(config):
