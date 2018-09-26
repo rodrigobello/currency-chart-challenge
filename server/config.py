@@ -3,7 +3,6 @@ import os
 
 class Config(object):
     DEBUG = False
-    CSRF_ENABLED = True
 
 
 class DevelopmentConfig(Config):
@@ -18,7 +17,6 @@ class TestingConfig(Config):
 
 
 class ProductionConfig(Config):
-    DEBUG = False
     ENV = 'production'
     SECRET = os.getenv('SECRET')
 
