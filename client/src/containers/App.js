@@ -1,3 +1,4 @@
+/* eslint no-console: ["error", { allow: ["warn", "error"] }] */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
@@ -7,7 +8,6 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { AppBar, HeroUnit, Footer } from '../components/Layout/Layout';
 
 import CurrencyChart from '../components/CurrencyChart/CurrencyChart';
-
 
 const styles = theme => ({
   layout: {
@@ -38,18 +38,18 @@ class App extends Component {
   }
 
   fetchRates(currency) {
-    fetch(`http://localhost:5000/api/currencies/${currency.id}`)
+    fetch(`http://localhost:5000/api/currencies/${currency.id}?orderby=asc`)
       .then((response) => {
         if (response.status === 200) {
           return response.json();
         }
         throw new Error(response.statusText);
       })
-      .then(data => this.setState({
-        rates: data.rate.quotes,
+      .then(rates => this.setState({
+        rates,
         selectedCurrency: currency,
       }))
-      .catch(e => console.log(e));
+      .catch(e => console.error(e));
   }
 
   render() {
@@ -75,7 +75,9 @@ class App extends Component {
 
 
 App.propTypes = {
-  classes: PropTypes.node.isRequired,
+  classes: PropTypes.shape({
+    layout: PropTypes.string,
+  }).isRequired,
 };
 
 export default withStyles(styles)(App);

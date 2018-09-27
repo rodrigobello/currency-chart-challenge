@@ -8,7 +8,7 @@ import { withStyles } from '@material-ui/core/styles';
 const styles = theme => ({
   footer: {
     backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing.unit * 6,
+    padding: theme.spacing.unit,
     position: 'absolute',
     bottom: 0,
     width: '100%',
@@ -18,10 +18,10 @@ const styles = theme => ({
 
 const footer = ({ classes }) => (
   <footer className={classes.footer}>
-    <Typography variant="title" align="center" gutterBottom>
+    <Typography variant="subheading" align="center" color="textPrimary" gutterBottom>
       { `© ${(new Date()).getFullYear()} Currency Chart Challenge` }
     </Typography>
-    <Typography variant="subheading" align="center" color="textSecondary" component="p">
+    <Typography variant="caption" align="center" color="textSecondary" component="p">
       <a href="https://github.com/rodrigobello">
         https://github.com/rodrigobello
       </a>
@@ -30,7 +30,9 @@ const footer = ({ classes }) => (
 );
 
 footer.propTypes = {
-  classes: PropTypes.node.isRequired,
+  classes: PropTypes.shape({
+    footer: PropTypes.string,
+  }).isRequired,
 };
 
 export default withStyles(styles)(footer);

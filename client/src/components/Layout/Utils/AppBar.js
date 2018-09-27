@@ -50,7 +50,10 @@ const appBar = ({ classes }) => (
 );
 
 appBar.propTypes = {
-  classes: PropTypes.node.isRequired,
+  classes: PropTypes.shape({
+    toolbarMain: PropTypes.string,
+    toolbarTitle: PropTypes.string,
+  }).isRequired,
 };
 
 export default withStyles(styles)(appBar);

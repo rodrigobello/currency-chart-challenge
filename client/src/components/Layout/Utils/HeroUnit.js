@@ -61,10 +61,9 @@ const heroUnit = ({ classes, selectedCurrency, onClick }) => (
           <Grid container spacing={16} justify="center">
             {
               currencies.map(currency => (
-                <Grid item>
+                <Grid item key={currency.id}>
                   <Button
                     variant="contained"
-                    key={currency.id}
                     value={currency.id}
                     onClick={() => onClick(currency)}
                     disabled={selectedCurrency.id === currency.id}
@@ -81,8 +80,13 @@ const heroUnit = ({ classes, selectedCurrency, onClick }) => (
   </React.Fragment>
 );
 
+
 heroUnit.propTypes = {
-  classes: PropTypes.node.isRequired,
+  classes: PropTypes.shape({
+    heroUnit: PropTypes.string,
+    heroContent: PropTypes.string,
+    heroButtons: PropTypes.string,
+  }).isRequired,
   selectedCurrency: PropTypes.PropTypes.shape({
     name: PropTypes.string,
     id: PropTypes.string,
