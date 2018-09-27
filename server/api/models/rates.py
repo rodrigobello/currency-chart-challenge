@@ -40,7 +40,7 @@ class Rates:
 
     def get_currency(self, currency):
         self.update_quotes(currency)
-        return self.currencies[currency]
+        return self.currencies[currency]['quotes']
 
     def update_quotes(self, currency):
         last_update = self.currencies[currency]['updated']
