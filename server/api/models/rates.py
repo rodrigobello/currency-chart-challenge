@@ -7,6 +7,8 @@ from utils.date import (
     days_diff
 )
 
+from utils.exceptions import ApiException
+
 
 class Rates:
     """
@@ -57,17 +59,21 @@ class Rates:
 
         dates = get_last_dates(days - 1)
 
-        if dates:
-            last_rates = get_historical_rates(currency, dates)
-        else:
-            last_rates = []
+        try:
+            if dates:
+                last_rates = get_historical_rates(currency, dates)
+            else:
+                last_rates = []
 
-        live_rate = get_live_rate(currency)
+            live_rate = get_live_rate(currency)
 
-        if days > 0:
-            new_quotes = [live_rate] + last_rates + current_quotes[:-days]
-        else:
-            new_quotes = [live_rate] + current_quotes[1:]
+            if days > 0:
+                new_quotes = [live_rate] + last_rates + current_quotes[:-days]
+            else:
+                new_quotes = [live_rate] + current_quotes[1:]
 
-        self.currencies[currency]['updated'] = date_to_str(today)
-        self.currencies[currency]['quotes'] = new_quotes
+            self.currencies[currency]['updated'] = date_to_str(today)
+            self.currencies[currency]['quotes'] = new_quotes
+
+        except ApiException as e:
+            raise ApiException(e)
