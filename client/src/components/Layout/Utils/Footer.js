@@ -9,6 +9,9 @@ const styles = theme => ({
   footer: {
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing.unit * 6,
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
   },
 });
 
@@ -16,10 +19,12 @@ const styles = theme => ({
 const footer = ({ classes }) => (
   <footer className={classes.footer}>
     <Typography variant="title" align="center" gutterBottom>
-        Footer
+      { `© ${(new Date()).getFullYear()} Currency Chart Challenge` }
     </Typography>
     <Typography variant="subheading" align="center" color="textSecondary" component="p">
-        Something here to give the footer a purpose!
+      <a href="https://github.com/rodrigobello">
+        https://github.com/rodrigobello
+      </a>
     </Typography>
   </footer>
 );

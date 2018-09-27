@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { withStyles } from '@material-ui/core/styles';
@@ -35,9 +36,15 @@ const appBar = ({ classes }) => (
       >
       Currency Chart Challenge
       </Typography>
-      <IconButton>
-        <GitHubIcon />
-      </IconButton>
+      <Tooltip title="GitHub Repository">
+        <IconButton
+          aria-label="GitHub Repository"
+          href="https://github.com/rodrigobello/currency-chart-challenge"
+        >
+          <GitHubIcon />
+        </IconButton>
+      </Tooltip>
+
     </Toolbar>
   </React.Fragment>
 );

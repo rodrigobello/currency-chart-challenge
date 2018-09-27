@@ -40,15 +40,23 @@ const heroUnit = ({ classes, selectedCurrency, onClick }) => (
   <React.Fragment>
     <div className={classes.heroUnit}>
       <div className={classes.heroContent}>
-        <Typography variant="display3" align="center" color="textPrimary" gutterBottom>
-            BRL Exchange Rate
-        </Typography>
-        <Typography variant="title" align="center" color="textSecondary" paragraph>
-          {
-          'Choose one of the currencies below to plot the chart with the Brazilian Real (BRL)'
-          + ' quotes in the last 7 days'
-          }
-        </Typography>
+        {
+          selectedCurrency.id
+            ? (
+              <Typography variant="display3" align="center" color="textPrimary" gutterBottom>
+                { `${selectedCurrency.id}xBRL Exchange Rate` }
+              </Typography>
+            )
+            : (
+              <Typography variant="title" align="center" color="textSecondary" gutterBottom>
+                {
+                'Choose one of the currencies below to plot the chart with the Brazilian Real (BRL)'
+                + ' quotes in the last 7 days'
+                }
+              </Typography>
+            )
+        }
+
         <div className={classes.heroButtons}>
           <Grid container spacing={16} justify="center">
             {
