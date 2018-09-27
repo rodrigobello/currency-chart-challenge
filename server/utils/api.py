@@ -66,7 +66,7 @@ def create_quotation_dictionary(currency, date=None):
     try:
         return {
             'date': date if date else date_to_str(datetime.date.today()),
-            'quote': request_quotation(currency, date=date),
+            'quote': round(request_quotation(currency, date=date), 4),
         }
     except ApiException as e:
         raise ApiException(e)
