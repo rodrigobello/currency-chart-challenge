@@ -23,7 +23,7 @@ const styles = theme => ({
 });
 
 
-class Home extends Component {
+class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -33,7 +33,23 @@ class Home extends Component {
   }
 
   onClick(currency) {
-    this.setState({ selectedCurrency: currency });
+    this.setState({ rates: [] }); // Set selected currency and rates to initial state
+    this.fetchRates(currency);
+  }
+
+  fetchRates(currency) {
+    fetch(`http://localhost:5000/api/currencies/${currency.id}`)
+      .then((response) => {
+        if (response.status === 200) {
+          return response.json();
+        }
+        throw new Error(response.statusText);
+      })
+      .then(data => this.setState({
+        rates: data.rate.quotes,
+        selectedCurrency: currency,
+      }))
+      .catch(e => console.log(e));
   }
 
   render() {
@@ -58,8 +74,8 @@ class Home extends Component {
 }
 
 
-Home.propTypes = {
+App.propTypes = {
   classes: PropTypes.node.isRequired,
 };
 
-export default withStyles(styles)(Home);
+export default withStyles(styles)(App);
