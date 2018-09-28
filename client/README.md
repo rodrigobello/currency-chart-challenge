@@ -1,6 +1,6 @@
 # Currency Chart Challenge (Client)
 
-This is the UI implementation for the challenge solution. It consumes the [server API](https://github.com/rodrigobello/currency-chart-challenge/blob/master/server/README.md) to plot the currency chart.
+This is the UI implementation for the challenge solution. It consumes the [server API](https://github.com/rodrigobello/currency-chart-challenge/tree/master/server) to plot the currency chart.
 
 ## Getting Started (Local)
 
@@ -25,7 +25,7 @@ npm install
 
 ## Running application
 
-Make sure api is also running otherwise no data will be fetch (and no chart plotted)
+Make sure the API is also running otherwise no data will be fetch (and no chart plotted)
 
 ```
 npm start

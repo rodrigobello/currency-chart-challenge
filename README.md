@@ -8,7 +8,7 @@ The challenge specified a third-party API to collect the exchange rates. I chose
 
 ### Getting Started
 
-To install and run the server application, [go to server instructions](https://github.com/rodrigobello/currency-chart-challenge/blob/master/server/README.md).
+To install and run the server application, [go to server instructions](https://github.com/rodrigobello/currency-chart-challenge/tree/master/server).
 
 ## Frontend
 
@@ -16,4 +16,4 @@ To build the frontend application, I chose React and used the highcharts library
 
 ### Getting Started
 
-To install and run the client application, [go to client instructions](https://github.com/rodrigobello/currency-chart-challenge/blob/master/client/README.md).
+To install and run the client application, [go to client instructions](https://github.com/rodrigobello/currency-chart-challenge/tree/master/client).
