@@ -24,7 +24,7 @@ const chart = ({ selectedCurrency, rates }) => {
 
   rates.forEach((rate) => {
     config.xAxis.categories.push(rate.date);
-    config.series[0].data.push(rate.quote);
+    config.series[0].data.push(rate.value);
   });
 
   return (

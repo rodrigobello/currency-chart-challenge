@@ -19,6 +19,9 @@ const styles = theme => ({
   heroButtons: {
     marginTop: theme.spacing.unit * 4,
   },
+  currencyButton: {
+    width: '150px',
+  },
 });
 
 const currencies = [
@@ -43,8 +46,8 @@ const heroUnit = ({ classes, selectedCurrency, onClick }) => (
         {
           selectedCurrency.id
             ? (
-              <Typography variant="display3" align="center" color="textPrimary" gutterBottom>
-                { `${selectedCurrency.id}xBRL Exchange Rate` }
+              <Typography variant="display2" align="center" color="textPrimary" gutterBottom>
+                { `${selectedCurrency.id} to BRL Exchange Rate` }
               </Typography>
             )
             : (
@@ -63,6 +66,7 @@ const heroUnit = ({ classes, selectedCurrency, onClick }) => (
               currencies.map(currency => (
                 <Grid item key={currency.id}>
                   <Button
+                    className={classes.currencyButton}
                     variant="contained"
                     value={currency.id}
                     onClick={() => onClick(currency)}
@@ -86,6 +90,7 @@ heroUnit.propTypes = {
     heroUnit: PropTypes.string,
     heroContent: PropTypes.string,
     heroButtons: PropTypes.string,
+    currencyButton: PropTypes.string,
   }).isRequired,
   selectedCurrency: PropTypes.PropTypes.shape({
     name: PropTypes.string,

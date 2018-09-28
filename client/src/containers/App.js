@@ -5,9 +5,12 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
-import { AppBar, HeroUnit, Footer } from '../components/Layout/Layout';
-
-import CurrencyChart from '../components/CurrencyChart/CurrencyChart';
+import {
+  AppBar,
+  HeroUnit,
+  Footer,
+  Main,
+} from '../components/Layout/Layout';
 
 const styles = theme => ({
   layout: {
@@ -28,44 +31,54 @@ class App extends Component {
     super(props);
     this.state = {
       rates: [],
+      query: 'idle',
     };
     this.onClick = this.onClick.bind(this);
   }
 
   onClick(currency) {
-    this.setState({ rates: [] }); // Set selected currency and rates to initial state
+    this.setState({
+      query: 'progress',
+      selectedCurrency: currency,
+    });
+
     this.fetchRates(currency);
   }
 
   fetchRates(currency) {
-    fetch(`http://localhost:5000/api/currencies/${currency.id}?orderby=asc`)
+    fetch(`http://localhost:5000/api?currency=${currency.id}&orderby=asc&days=7`)
       .then((response) => {
         if (response.status === 200) {
           return response.json();
         }
         throw new Error(response.statusText);
       })
-      .then(rates => this.setState({
-        rates,
-        selectedCurrency: currency,
+      .then(data => this.setState({
+        rates: data.quotes,
+        query: 'success',
       }))
-      .catch(e => console.error(e));
+      .catch((e) => {
+        console.warn(e);
+        this.setState({
+          query: 'error',
+        });
+      });
   }
 
   render() {
     const { classes } = this.props;
-    const { selectedCurrency, rates } = this.state;
-    let chart;
-    if (selectedCurrency) {
-      chart = <CurrencyChart selectedCurrency={selectedCurrency} rates={rates} />;
-    }
+    const {
+      selectedCurrency,
+      rates,
+      query,
+    } = this.state;
     return (
       <React.Fragment>
         <CssBaseline />
         <div className={classes.layout}>
           <AppBar />
           <HeroUnit selectedCurrency={selectedCurrency} onClick={this.onClick} />
-          { chart }
+          <Main selectedCurrency={selectedCurrency} rates={rates} query={query} />
         </div>
         <Footer />
       </React.Fragment>
@@ -77,6 +90,7 @@ class App extends Component {
 App.propTypes = {
   classes: PropTypes.shape({
     layout: PropTypes.string,
+    root: PropTypes.string,
   }).isRequired,
 };
 
