@@ -20,7 +20,7 @@ class TestingConfig(Config):
 
 class ProductionConfig(Config):
     ENV = 'production'
-    SECRET = os.getenv('SECRET')
+    SECRET = os.environ.get('SECRET')
 
 
 app_config = {

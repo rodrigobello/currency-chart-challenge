@@ -46,7 +46,7 @@ class App extends Component {
   }
 
   fetchRates(currency) {
-    fetch(`http://localhost:5000/api?currency=${currency.id}&orderby=asc&days=7`)
+    fetch(`https://brl-rate-api.herokuapp.com/api?currency=${currency.id}&orderby=asc&days=7`)
       .then((response) => {
         if (response.status === 200) {
           return response.json();
