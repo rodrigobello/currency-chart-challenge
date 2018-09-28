@@ -42,28 +42,27 @@ class Quote(db.Model):
         self.date = date
 
     @classmethod
-    def request_quotes(cls, currency):
-        days = None
+    def request_quotes(cls, currency, days):
+        days_without_request = None
 
-        last_quote = cls.query.order_by(
-            Quote.date.desc(),
-        ).filter_by(currency=currency).first()
+        last_quote = cls.get_currency_last_quote(currency)
 
         if last_quote:
-            days = days_diff(get_today_date(), last_quote.date)
+            days_without_request = days_diff(get_today_date(), last_quote.date)
 
         # Either currency is empty or the update ocurred a long time ago
-        if days is None or days > 2:
-            days = 2  # TO DO: Change days to 7 when in production
+        if days_without_request is None or days_without_request > 2:
+            days_without_request = days
 
-        previous_dates = get_last_dates(days - 1)
+        previous_dates = get_last_dates(days_without_request - 1)
 
         try:
             if previous_dates:
                 previous_quotes = get_historical_rates(
                     currency,
-                    previous_dates,
+                    previous_dates
                 )
+
                 for quote in previous_quotes:
                     cls.save_quote(quote)
 
@@ -98,16 +97,18 @@ class Quote(db.Model):
 
     @classmethod
     def get_currency_last_quotes(cls, currency, days, orderby=None):
+        query = Quote.query.filter_by(currency=currency)
         if orderby == 'asc':
-            return Quote.query.order_by(
-                Quote.date.asc(),
-            ).filter_by(currency=currency).limit(days)
+            query = query.order_by(Quote.date.asc())
         elif orderby == 'desc':
-            return Quote.query.order_by(
-                Quote.date.desc(),
-            ).filter_by(currency=currency).limit(days)
-        else:
-            return Quote.query.filter_by(currency=currency).limit(days)
+            return query.order_by(Quote.date.desc())
+        return query.limit(days)
+
+    @classmethod
+    def get_currency_last_quote(cls, currency):
+        return cls.query.order_by(
+            Quote.date.desc()
+        ).filter_by(currency=currency).first()
 
 
 class QuoteSchema(marsh.Schema):

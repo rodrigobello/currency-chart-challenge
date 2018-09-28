@@ -28,16 +28,25 @@ class Quotes(Resource):
         help="You have entered an invalid currency. "
         + "[Keep in mind that we only work with ARS, EUR and USD]"
     )
+    parser.add_argument(
+        'days',
+        type=int,
+    )
 
     def get(self):
         data = self.parser.parse_args()
 
+        if not data.days:
+            data.days = 3
+
+        print(data.days)
+
         try:
-            Quote.request_quotes(data.currency)
+            Quote.request_quotes(data.currency, data.days)
 
             quotes = Quote.get_currency_last_quotes(
                         data.currency,
-                        2,
+                        data.days,
                         data.orderby,
                     )
 
