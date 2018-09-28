@@ -39,8 +39,6 @@ class Quotes(Resource):
         if not data.days:
             data.days = 3
 
-        print(data.days)
-
         try:
             Quote.request_quotes(data.currency, data.days)
 
