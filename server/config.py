@@ -7,8 +7,10 @@ class Config(object):
 
 class DevelopmentConfig(Config):
     DEBUG = True
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
     ENV = 'development'
-    CURRENCY_LAYER_KEY = 'ADD_CURRENCY_LAYER_KEY'
+    # CURRENCY_LAYER_KEY = 'apikey'
+    # SQLALCHEMY_DATABASE_URI = "postgresql://username:password@localhost/database_name"
 
 
 class TestingConfig(Config):

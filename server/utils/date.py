@@ -44,5 +44,14 @@ def get_last_dates(number_of_days):
     :param number_of_days: int
     :return: dates as [ String ]
     """
-    now = datetime.date.today()
-    return [date_to_str(subtract_days_from_date(now, i + 1)) for i in range(number_of_days)]
+    now = get_today_date()
+    return [subtract_days_from_date(now, i + 1) for i in range(number_of_days)]
+
+
+def get_today_date():
+    """
+    Return current date with only day, year and month.
+
+    :return: date as Datetime
+    """
+    return datetime.date.today()

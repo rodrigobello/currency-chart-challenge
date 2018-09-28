@@ -5,7 +5,7 @@ import sys
 from werkzeug.security import safe_str_cmp
 from flask import current_app
 
-from utils.date import datetime, date_to_str
+from utils.date import get_today_date, date_to_str
 from utils.exceptions import ApiException
 
 
@@ -32,6 +32,7 @@ def request_quotation(currency, date=None):
                 'http://apilayer.net/api/live?',
                 params=params)
         else:
+            date = date_to_str(date)
             response = requests.get(
                 f'http://apilayer.net/api/historical?date={date}',
                 params=params)
@@ -59,14 +60,15 @@ def request_quotation(currency, date=None):
 def create_quotation_dictionary(currency, date=None):
     """
     :param quote: Float
-    :param date: String
+    :param date: Datetime
     :param currency: String
-    :return: quotation as { date: String, currency: String, brl: Float }
+    :return: quotation as { date: Datetime, currency: String, value: Float }
     """
     try:
         return {
-            'date': date if date else date_to_str(datetime.date.today()),
-            'quote': round(request_quotation(currency, date=date), 4),
+            'currency': currency,
+            'date': date if date else get_today_date(),
+            'value': round(request_quotation(currency, date=date), 4),
         }
     except ApiException as e:
         raise ApiException(e)
@@ -74,9 +76,9 @@ def create_quotation_dictionary(currency, date=None):
 
 def get_historical_rates(currency, dates):
     """
-    :param dates: [ String ]
+    :param dates: [ Datetime ]
     :param currency: String
-    :return: quotations as [{ date: String, currency: String, brl: Float }]
+    :return: quotations as [{ date: Datetime, currency: String, value: Float }]
     """
     try:
         return list(
@@ -88,9 +90,9 @@ def get_historical_rates(currency, dates):
 
 def get_live_rate(currency):
     """
-    :param date: String
+    :param date: Datetime
     :param currency: String
-    :return: quotation as { date: String, currency: String, brl: Float }
+    :return: quotation as { date: Datetime, currency: String, value: Float }
     """
     try:
         return create_quotation_dictionary(currency)
