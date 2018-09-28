@@ -9,10 +9,11 @@ quote_schema = QuoteSchema()
 
 class Quotes(Resource):
     """
-    API resource that return the quotes of the currency passed in the request.
+    API resource that return the BRL exchange rate with the currency
+    passed in the request.
 
     :param currency: Must be one of ['USD, 'ARS', 'EUR]
-    :return: The last seven days currency quotes (BRL currency)
+    :return: The last days BRL exchange rate
     """
     parser = reqparse.RequestParser()
     parser.add_argument(

@@ -47,7 +47,7 @@ const heroUnit = ({ classes, selectedCurrency, onClick }) => (
           selectedCurrency.id
             ? (
               <Typography variant="display2" align="center" color="textPrimary" gutterBottom>
-                { `${selectedCurrency.id} to BRL Exchange Rate` }
+                { `BRL to ${selectedCurrency.id} Exchange Rate` }
               </Typography>
             )
             : (

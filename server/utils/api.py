@@ -52,9 +52,9 @@ def request_quotation(currency, date=None):
     quotes = data['quotes']
 
     if safe_str_cmp(currency, 'USD'):
-        return quotes['USDBRL']
+        return 1 / quotes['USDBRL']
 
-    return quotes['USDBRL'] / quotes[f'USD{currency}']
+    return quotes[f'USD{currency}'] / quotes['USDBRL']
 
 
 def create_quotation_dictionary(currency, date=None):

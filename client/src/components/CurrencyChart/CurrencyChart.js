@@ -17,7 +17,7 @@ const chart = ({ selectedCurrency, rates }) => {
       categories: [],
     },
     series: [{
-      name: `${selectedCurrency.id} to BRL`,
+      name: `BRL to ${selectedCurrency.id}`,
       data: [],
     }],
   };
