@@ -73,7 +73,7 @@ class Quote(db.Model):
 
     @classmethod
     def save_quote(cls, quote):
-        quote = Quote(
+        quote = cls(
             currency=quote['currency'],
             value=quote['value'],
             date=quote['date']
@@ -84,7 +84,7 @@ class Quote(db.Model):
 
     @classmethod
     def update_quote_value(cls, quote):
-        last_quote = Quote.query.filter_by(
+        last_quote = cls.query.filter_by(
             currency=quote['currency'],
         ).filter_by(date=get_today_date()).first()
 
@@ -97,10 +97,10 @@ class Quote(db.Model):
 
     @classmethod
     def get_currency_last_quotes(cls, currency, days, orderby=None):
-        quotes = Quote.\
+        quotes = cls.\
                 query.\
                 filter_by(currency=currency).\
-                order_by(Quote.date.desc()).limit(days)
+                order_by(cls.date.desc()).limit(days)
 
         if orderby == 'asc':
             return quotes[::-1]
@@ -110,7 +110,7 @@ class Quote(db.Model):
     @classmethod
     def get_currency_last_quote(cls, currency):
         return cls.query.order_by(
-            Quote.date.desc()
+            cls.date.desc()
         ).filter_by(currency=currency).first()
 
 
