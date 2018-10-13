@@ -97,12 +97,15 @@ class Quote(db.Model):
 
     @classmethod
     def get_currency_last_quotes(cls, currency, days, orderby=None):
-        query = Quote.query.filter_by(currency=currency)
+        quotes = Quote.\
+                query.\
+                filter_by(currency=currency).\
+                order_by(Quote.date.desc()).limit(days)
+
         if orderby == 'asc':
-            query = query.order_by(Quote.date.asc())
-        elif orderby == 'desc':
-            return query.order_by(Quote.date.desc())
-        return query.limit(days)
+            return quotes[::-1]
+
+        return quotes
 
     @classmethod
     def get_currency_last_quote(cls, currency):
