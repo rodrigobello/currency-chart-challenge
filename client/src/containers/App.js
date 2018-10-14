@@ -1,12 +1,12 @@
 /* eslint no-console: ["error", { allow: ["warn", "error"] }] */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
 import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 import {
   AppBar,
+  About,
   HeroUnit,
   Footer,
   Main,
@@ -32,8 +32,11 @@ class App extends Component {
     this.state = {
       rates: [],
       query: 'idle',
+      aboutOpen: false,
     };
     this.onClick = this.onClick.bind(this);
+    this.aboutOpenHandler = this.aboutOpenHandler.bind(this);
+    this.aboutCloseHandler = this.aboutCloseHandler.bind(this);
   }
 
   onClick(currency) {
@@ -43,6 +46,14 @@ class App extends Component {
     });
 
     this.fetchRates(currency);
+  }
+
+  aboutOpenHandler() {
+    this.setState({ aboutOpen: true });
+  }
+
+  aboutCloseHandler() {
+    this.setState({ aboutOpen: false });
   }
 
   fetchRates(currency) {
@@ -71,12 +82,19 @@ class App extends Component {
       selectedCurrency,
       rates,
       query,
+      aboutOpen,
     } = this.state;
     return (
       <React.Fragment>
         <CssBaseline />
         <div className={classes.layout}>
-          <AppBar />
+          <AppBar>
+            <About
+              aboutOpen={aboutOpen}
+              aboutOpenHandler={this.aboutOpenHandler}
+              aboutCloseHandler={this.aboutCloseHandler}
+            />
+          </AppBar>
           <HeroUnit selectedCurrency={selectedCurrency} onClick={this.onClick} />
           <Main selectedCurrency={selectedCurrency} rates={rates} query={query} />
         </div>

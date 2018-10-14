@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
-import Button from '@material-ui/core/Button';
 import Tooltip from '@material-ui/core/Tooltip';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -22,11 +21,14 @@ const styles = theme => ({
   },
 });
 
-const appBar = ({ classes }) => (
+const appBar = ({
+  classes,
+  children,
+}) => (
   <React.Fragment>
     <CssBaseline />
     <Toolbar className={classes.toolbarMain}>
-      <Button size="small">About</Button>
+      {children}
       <Typography
         variant="headline"
         color="inherit"
@@ -44,7 +46,6 @@ const appBar = ({ classes }) => (
           <GitHubIcon />
         </IconButton>
       </Tooltip>
-
     </Toolbar>
   </React.Fragment>
 );
@@ -54,6 +55,7 @@ appBar.propTypes = {
     toolbarMain: PropTypes.string,
     toolbarTitle: PropTypes.string,
   }).isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default withStyles(styles)(appBar);
